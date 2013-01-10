@@ -15,7 +15,7 @@
 #define PIN_MISO		GPIO_PIN_6 //Equivalent of pin 0x2 in CSR code
 #define PIN_MOSI		GPIO_PIN_5 //Equivalent of pin 0x4 in CSR code
 #define PIN_CLK			GPIO_PIN_7 //Equivalent of pin 0x8 in CSR code
-#define PIN_UNK			GPIO_PIN_4 //Equivalent to pin 0x10 in CSR code
+#define PIN_UNK			GPIO_PIN_3 //Equivalent to pin 0x10 in CSR code
 #define PIN_ALL_OUT		PIN_CS|PIN_MOSI|PIN_CLK|PIN_UNK
 #define PIN_ALL_IN		PIN_MISO
 #define PORT_BASE	GPIO_PORTC_BASE
