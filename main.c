@@ -87,7 +87,7 @@ int CmdGetSerial();
 int CmdGetVersion();
 int CmdSetMode(unsigned short nMode);
 int CmdSetBits(unsigned short nWhich, unsigned short nValue);
-int CmdBcCmdInit(unsigned short nA, unsigned short nB);
+void CmdBcCmdInit(unsigned short nA, unsigned short nB);
 int CmdBcCmd(unsigned short nLength, unsigned char *pData);
 
 void TransmitCallback() {
@@ -96,7 +96,7 @@ void TransmitCallback() {
 		nPacket = nTransmitLength - nTransmitOffset;
 		if (nPacket > 64)
 			nPacket = 64;
-		USBDBulkPacketWrite(&g_sBulkDevice, &pTransmitBuffer[nTransmitOffset], nPacket, true);
+		USBDBulkPacketWrite((void *)&g_sBulkDevice, &pTransmitBuffer[nTransmitOffset], nPacket, true);
 		nTransmitOffset += nPacket;
 		if (nPacket < 64)
 			bTransmitting = 0;
@@ -105,7 +105,7 @@ void TransmitCallback() {
 void StartTransmit() {
 	nTransmitOffset = 0;
 	bTransmitting = 1;
-	if (USBDBulkTxPacketAvailable(&g_sBulkDevice))
+	if (USBDBulkTxPacketAvailable((void *)&g_sBulkDevice))
 		TransmitCallback();
 }
 void WaitTransmit() {
@@ -119,7 +119,7 @@ void WaitTransmit() {
 void main(void) {
 	size_t nOffset;
 	unsigned short nCommand, nArgs[4];
-	int i;
+
 	//Set Clock at 80MHz
 	ROM_SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
 	//Enable UART on Port A
@@ -363,11 +363,12 @@ int CmdSetBits(unsigned short nWhich, unsigned short nValue) {
 	return 1;
 }
 
-int CmdBcCmdInit(unsigned short nA, unsigned short nB) {
+void CmdBcCmdInit(unsigned short nA, unsigned short nB) {
 	UARTprintf("BCCMD Init: %04X %04X\n", nA, nB);
 	g_nBcA = nA;
 	g_nBcB = nB;
 }
+
 int CmdBcCmd(unsigned short nLength, unsigned char *pData) {
 	unsigned short i;
 	//UARTprintf("BCCMD input:\n");
@@ -412,7 +413,7 @@ unsigned long RxHandler(void *pvCBData, unsigned long ulEvent, unsigned long ulM
         			UARTprintf("Buffer overflow\n");
         			return 0;
         		}
-        		nReceiveLength += USBDBulkPacketRead(&g_sBulkDevice, &pReceiveBuffer[nReceiveLength], ulMsgValue, true);
+        		nReceiveLength += USBDBulkPacketRead((void *)&g_sBulkDevice, &pReceiveBuffer[nReceiveLength], ulMsgValue, true);
         		if (ulMsgValue < 64) {
         			bReceiving = 0;
         		}

@@ -12,7 +12,9 @@ How to use
 ---
 * Get a TI Stellaris Launchpad ($10), StellarisWare, TI's Code Composer (free with the launchpad), and an extra USB<->microUSB cable.
 * Import this project into Code composer as usual.
-* If your StellarisWare is not located in C:\StellarisWare, edit it in Project -> Properties -> Resource -> Linked Resources -> Path Variables -> SW_ROOT, as well as Window -> Preferences -> C/C++ -> Build -> Environment -> SW_ROOT.
+* Ensure SW_ROOT is set to your StellarisWare directory in *both* of these locations:
+    * Project -> Properties -> Resource -> Linked Resources -> Path Variables -> SW_ROOT
+    * Window -> Preferences -> C/C++ -> Build -> Environment -> SW_ROOT.
 * Build using Project -> Build Project
 * Connect your BlueCore module. 3.3v -> 3.3v, GND -> GND, PC4 -> SPI_CSB, PC5 -> SPI_MOSI, PC6 -> SPI_MISO, PC7 -> SPI_CLK. (PC4 - PC7 are located on the second column from the right)
 * Connect your Stellaris Launchpad with the microUSB port at the top (next to power select), and set power select to DEBUG.
