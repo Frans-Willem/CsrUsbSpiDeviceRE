@@ -35,3 +35,7 @@ TODO
 ---
 * Clean up: The code works, but should still be cleaned up, and some bits aren't fully reverse engineered yet (e.g. the BCCMD timeout)
 * Refactor/rewrite: The code as it is now is as close to CSR's code as I could get, but it's not the most readable. I intend to refactor this at some point (maybe in a different project) to make it more readable and portable to other platforms.
+
+Ports to other platforms
+---
+* Tiva C Launchpad (EK-TM4C123GXL) by Richard Aplin: https://github.com/raplin/CsrUsbSpiDeviceRE
